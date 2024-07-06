@@ -7,14 +7,10 @@ class GetCategorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Category
-        fields = ['id', 'name', 'slug', 'children', 'parent']
-
+        fields = ['id', 'name', 'slug', 'children']
 
     def get_children(self, instance: Category):
-        if instance.children.exists() is not None:
-            return GetCategorySerializer(instance.children.all(), many=True).data
-        else:
-            return None
+        return GetCategorySerializer(instance.children.all(), many=True).data
 
 
 class CreateCategorySerializer(serializers.Serializer):
